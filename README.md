@@ -1,4 +1,4 @@
-# spring-protobuff-poc
+# spring boot-protobuff-poc
 spring boot with protocol buff
 Protocol buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data.
 
