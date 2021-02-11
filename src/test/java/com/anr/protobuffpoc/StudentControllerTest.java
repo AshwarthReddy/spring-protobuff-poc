@@ -41,7 +41,7 @@ public class StudentControllerTest {
         var student = StudentProto.Student.newBuilder().setId(4).setFirstName("foo").setLastName("bar").build();
 
         ResponseEntity<StudentProto.Student> studentResponseEntity =
-                this.restTemplate.postForEntity(URL + "/add", student, StudentProto.Student.class);
+                this.restTemplate.postForEntity(URL, student, StudentProto.Student.class);
 
         assertEquals(200, studentResponseEntity.getStatusCodeValue());
         String jsonResponse = JsonFormat.printer().print(studentResponseEntity.getBody());
@@ -50,7 +50,7 @@ public class StudentControllerTest {
     }
 
     @Test
-    public void deletedStudent() {
+    public void deleteStudent() {
         ResponseEntity<String> response = restTemplate.exchange(URL + "/1", HttpMethod.DELETE, null, String.class);
         assertEquals(200, response.getStatusCodeValue());
 

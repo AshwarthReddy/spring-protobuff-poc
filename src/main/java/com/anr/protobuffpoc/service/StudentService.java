@@ -8,7 +8,7 @@ public interface StudentService {
 
     StudentListProto.StudentList getAllStudents();
 
-    public StudentProto.Student addStudent(StudentProto.Student student);
+    StudentProto.Student addStudent(StudentProto.Student student);
 
     String deleteStudentById(Integer id);
 }

@@ -50,7 +50,7 @@ public class StudentController {
      * @param student
      * @return
      */
-    @RequestMapping(value = "/add", produces = "application/x-protobuf")
+    @RequestMapping
     public Student addStudent(@RequestBody Student student) {
 
         return this.studentService.addStudent(student);
