@@ -1,0 +1,11 @@
+syntax = "proto3";
+option java_package = "com.anr.protobuff.dto";
+option java_outer_classname = "StudentProto";
+
+message Student {
+  int32 id = 1;
+  string firstName = 2;
+  string lastName = 3;
+
+
+}
