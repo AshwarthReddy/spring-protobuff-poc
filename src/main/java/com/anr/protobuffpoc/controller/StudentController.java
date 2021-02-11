@@ -25,9 +25,7 @@ public class StudentController {
      */
     @GetMapping("/{id}")
     public Student getStudent(@PathVariable String id) {
-        Student studentById = studentService.getStudentById(Integer.valueOf(id));
-        return studentById;
-
+        return this.studentService.getStudentById(Integer.valueOf(id));
     }
 
 
@@ -40,7 +38,6 @@ public class StudentController {
      */
     @GetMapping
     public StudentList getAllStudentList() {
-
         return this.studentService.getAllStudents();
     }
 
@@ -56,7 +53,7 @@ public class StudentController {
     @RequestMapping(value = "/add", produces = "application/x-protobuf")
     public Student addStudent(@RequestBody Student student) {
 
-        return studentService.addStudent(student);
+        return this.studentService.addStudent(student);
     }
 
     /**

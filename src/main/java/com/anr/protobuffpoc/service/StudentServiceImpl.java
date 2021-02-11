@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 @Service
 public class StudentServiceImpl implements StudentService {
 
+    public static final String DELETED_SUCCESSULLY = "deleted successully";
     @Autowired
     private StudentRepo studentRepo;
 
@@ -29,7 +30,7 @@ public class StudentServiceImpl implements StudentService {
     public StudentListProto.StudentList getAllStudents() {
 
         var studentsProtos = this.studentRepo.findAll().stream().map(data -> {
-            StudentListProto.StudentList.Student student = StudentListProto.StudentList.newBuilder().addStudentsBuilder()
+            var student = StudentListProto.StudentList.newBuilder().addStudentsBuilder()
                     .setId(data.getId())
                     .setFirstName(data.getFirstName())
                     .setLastName(data.getLastName()).build();
@@ -50,6 +51,6 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public String deleteStudentById(Integer id) {
          this.studentRepo.deleteById(id);
-        return "deleted successully";
+        return DELETED_SUCCESSULLY;
     }
 }
