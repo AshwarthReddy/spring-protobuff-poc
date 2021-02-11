@@ -1,5 +1,6 @@
 package com.anr.protobuffpoc;
 
+import com.anr.protobuff.dto.StudentListProto;
 import com.anr.protobuff.dto.StudentProto;
 import com.google.protobuf.util.JsonFormat;
 import org.junit.jupiter.api.Test;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -29,28 +31,41 @@ public class StudentControllerTest {
     public void getStudentById() throws Exception {
         var response = this.restTemplate.getForObject(URL + "/{id}", StudentProto.Student.class, 3);
         String jsonResponse = JsonFormat.printer().print(response);
-        assertResponse(jsonResponse);
-
-
+        verifyResponse(jsonResponse);
     }
 
 
     @Test
     public void addStudent() throws Exception {
 
-        StudentProto.Student student = StudentProto.Student.newBuilder().setId(4).setFirstName("foo").setLastName("bar").build();
+        var student = StudentProto.Student.newBuilder().setId(4).setFirstName("foo").setLastName("bar").build();
 
         ResponseEntity<StudentProto.Student> studentResponseEntity =
                 this.restTemplate.postForEntity(URL + "/add", student, StudentProto.Student.class);
 
-
         assertEquals(200, studentResponseEntity.getStatusCodeValue());
         String jsonResponse = JsonFormat.printer().print(studentResponseEntity.getBody());
-        assertResponse(jsonResponse);
+        verifyResponse(jsonResponse);
 
     }
 
-    private void assertResponse(String response) {
+    @Test
+    public void deletedStudent() {
+        ResponseEntity<String> response = restTemplate.exchange(URL + "/1", HttpMethod.DELETE, null, String.class);
+        assertEquals(200, response.getStatusCodeValue());
+
+    }
+
+
+    @Test
+    public void getAllStudents() throws Exception {
+        StudentListProto.StudentList response = restTemplate.getForObject(URL, StudentListProto.StudentList.class);
+        String jsonResponse = JsonFormat.printer().print(response);
+        verifyResponse(jsonResponse);
+
+    }
+
+    private void verifyResponse(String response) {
         assertThat(response, containsString("id"));
         assertThat(response, containsString("firstName"));
         assertThat(response, containsString("lastName"));
